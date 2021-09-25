@@ -21,4 +21,21 @@ ln -s $listPath list_slink
 ls -li list_hlink
 ls -li $listPath
 ls -li list_slink
-
+#8
+wc -l < $listPath >> list_hlink
+#9
+difference=$(diff list_hlink list_slink 2> /dev/null)
+if [[ "$?" = "0" ]]; then
+    if [[ $difference = "" ]]; then
+        echo "YES"
+    fi
+fi
+#10
+mv $listPath $testPath/list1
+#11
+difference=$(diff list_hlink list_slink 2> /dev/null)
+if [[ "$?" = "0" ]]; then
+    if [[ $difference = "" ]]; then
+        echo "YES"
+    fi
+fi
