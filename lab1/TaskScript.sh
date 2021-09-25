@@ -2,21 +2,22 @@
 
 testPath="${HOME}/test"
 listPath="${HOME}/test/list"
+linksPath="${HOME}/test/links"
 
 #1
-cd $HOME && mkdir test && cd test && touch list
+cd $HOME && mkdir test 2> /dev/null && cd test && touch list 2> /dev/null
 #2
 cd $HOME/Desktop/test && ls -aFG > $listPath
 #3
 ls -d /etc/* | wc -l >> $listPath
-find /etc -name ".*" | wc -l >> $listPath
+sudo find /etc/ -name ".*" | wc -l >> $listPath
 #4
-mkdir $testPath/links
+mkdir $testPath/links 2> /dev/null
 #5
 cd $testPath/links
-ln $listPath list_hlink
+ln $listPath list_hlink 2> /dev/null
 #6
-ln -s $listPath list_slink
+ln -s $listPath list_slink 2> /dev/null
 #7
 ls -li list_hlink
 ls -li $listPath
@@ -39,3 +40,13 @@ if [[ "$?" = "0" ]]; then
         echo "YES"
     fi
 fi
+#12
+#13
+listConfPath=$HOME/list_conf
+sudo find /etc/ -iname "*.conf" > $listConfPath
+#14
+listdPath=$HOME/list_d
+sudo find /etc/ -d -iname "*.d" > $listdPath
+#15
+listConfDPath=$HOME/list_conf_d
+cat $listConfPath >> $listConfDPath && cat $listdPath >> $listConfDPath
