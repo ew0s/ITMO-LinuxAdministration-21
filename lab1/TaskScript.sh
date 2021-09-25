@@ -8,7 +8,7 @@ linksPath="${HOME}/test/links"
 cd $HOME && mkdir test 2> /dev/null && cd test && touch list 2> /dev/null
 
 #2
-cd $HOME/Desktop/test && ls -aFG > $listPath
+cd $HOME/test && ls -aFG > $listPath
 
 #3
 ls -d /etc/* | wc -l >> $listPath
@@ -33,22 +33,16 @@ ls -li list_slink
 wc -l < $listPath >> list_hlink
 
 #9
-difference=$(diff list_hlink list_slink 2> /dev/null)
-if [[ "$?" = "0" ]]; then
-    if [[ $difference = "" ]]; then
-        echo "YES"
-    fi
+if diff list_hlink list_slink 2> /dev/null; then
+	echo "YES"
 fi
 
 #10
 mv $listPath $testPath/list1
 
 #11
-difference=$(diff list_hlink list_slink 2> /dev/null)
-if [[ "$?" = "0" ]]; then
-    if [[ $difference = "" ]]; then
-        echo "YES"
-    fi
+if diff list_hlink list_slink 2> /dev/null; then
+	echo "YES"
 fi
 
 #12
@@ -59,7 +53,7 @@ sudo find /etc/ -iname "*.conf" > $listConfPath
 
 #14
 listdPath=$HOME/list_d
-sudo find /etc/ -d -iname "*.d" > $listdPath
+sudo find /etc/ -iname "*.d" > $listdPath
 
 #15
 listConfDPath=$HOME/list_conf_d
@@ -105,13 +99,13 @@ echo "string-2" >> ~/man.txt
 echo "string-1" >> ~/man.txt
 
 #27
-diff -u ~/man.txt ~/test/man.dir/man.txt > ~/filesdiff
+diff -u ~/man.txt ~/test/man.dir/man.txt > ~/filesdiff.txt
 
 #28
-mv ~/filesdiff ~/test/man.dir
+mv ~/filesdiff.txt ~/test/man.dir
 
 #29
-patch ~/test/man.dir/man.txt filesdiff
+patch ~/test/man.dir/man.txt ~/test/man.dir/filesdiff.txt
 
 #30
 if diff ~/man.txt ~/test/man.dir/man.txt; then
